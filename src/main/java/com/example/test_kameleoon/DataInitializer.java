@@ -7,6 +7,7 @@ import com.example.test_kameleoon.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Date;
 
@@ -23,7 +24,8 @@ public class DataInitializer implements CommandLineRunner {
     }
 
     @Override
-    public void run(String... args) throws Exception {
+    @Transactional
+    public void run(String... args) {
         User user = new User();
         user.setName("John Doe");
         user.setEmail("john.doe@example.com");
@@ -42,6 +44,14 @@ public class DataInitializer implements CommandLineRunner {
         quote2.setDateOfCreation(new Date());
         quote2.setUser(user);
         quoteService.createQuote(quote2);
+
+        for (int i = 0; i < 100; i++) {
+            Quote loopQuote = new Quote();
+            loopQuote.setContent("Created in loop " + i);
+            loopQuote.setDateOfCreation(new Date());
+            loopQuote.setUser(user);
+            quoteService.createQuote(loopQuote);
+        }
 
     }
 }

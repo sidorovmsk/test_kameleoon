@@ -17,29 +17,22 @@ public class QuoteService {
     }
 
     public Quote createQuote(Quote quote) {
-        // Логика создания цитаты
         return quoteRepository.save(quote);
     }
 
     public List<Quote> getTop10Quotes() {
-        // Логика получения лучших 10 цитат
-        // (например, использование метода в репозитории, который возвращает топ-цитаты)
-        return null;
+        return quoteRepository.findTop10ByOrderByVotesDesc();
     }
 
     public List<Quote> getWorst10Quotes() {
-        // Логика получения худших 10 цитат
-        // (аналогично использование метода в репозитории)
-        return null;
+        return quoteRepository.findWorst10ByOrderByVotesAsc();
     }
 
     public Quote getQuoteById(int quoteId) {
-        // Логика получения цитаты по ID
         return quoteRepository.findById(quoteId).orElse(null);
     }
 
     public void deleteQuote(int quoteId) {
-        // Логика удаления цитаты
         quoteRepository.deleteById(quoteId);
     }
 

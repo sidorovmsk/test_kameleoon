@@ -8,6 +8,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
+import jakarta.persistence.Table;
 import lombok.Data;
 
 import java.util.Date;
@@ -15,10 +16,11 @@ import java.util.List;
 
 @Entity
 @Data
+@Table(name = "quote")
 public class Quote {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+    private Integer id;
     private String content;
     private Date dateOfCreation;
 
