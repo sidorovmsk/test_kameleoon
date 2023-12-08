@@ -2,6 +2,7 @@ package com.example.test_kameleoon;
 
 import com.example.test_kameleoon.models.Quote;
 import com.example.test_kameleoon.models.User;
+import com.example.test_kameleoon.models.Vote;
 import com.example.test_kameleoon.services.QuoteService;
 import com.example.test_kameleoon.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,12 +38,18 @@ public class DataInitializer implements CommandLineRunner {
         quote1.setContent("To be or not to be, that is the question.");
         quote1.setDateOfCreation(new Date());
         quote1.setUser(user);
+        Vote vote1 = new Vote();
+        vote1.setVoteCount(0);
+        quote1.setVote(vote1);
         quoteService.createQuote(quote1);
 
         Quote quote2 = new Quote();
         quote2.setContent("The only limit to our realization of tomorrow will be our doubts of today.");
         quote2.setDateOfCreation(new Date());
         quote2.setUser(user);
+        Vote vote2 = new Vote();
+        vote2.setVoteCount(5);
+        quote2.setVote(vote2);
         quoteService.createQuote(quote2);
 
         for (int i = 0; i < 100; i++) {
@@ -50,6 +57,9 @@ public class DataInitializer implements CommandLineRunner {
             loopQuote.setContent("Created in loop " + i);
             loopQuote.setDateOfCreation(new Date());
             loopQuote.setUser(user);
+            Vote loopVote = new Vote();
+            loopVote.setVoteCount((int) (Math.random() * 1000));
+            loopQuote.setVote(loopVote);
             quoteService.createQuote(loopQuote);
         }
 

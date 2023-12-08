@@ -7,12 +7,11 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
-import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import lombok.Data;
 
 import java.util.Date;
-import java.util.List;
 
 @Entity
 @Data
@@ -28,8 +27,7 @@ public class Quote {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @OneToMany(mappedBy = "quote", cascade = CascadeType.ALL)
-    private List<Vote> votes;
-
-
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "vote_id")
+    private Vote vote;
 }
