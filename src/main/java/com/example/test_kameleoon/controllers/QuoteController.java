@@ -1,5 +1,6 @@
 package com.example.test_kameleoon.controllers;
 
+import com.example.test_kameleoon.dto.QuoteDTO;
 import com.example.test_kameleoon.models.Quote;
 import com.example.test_kameleoon.services.QuoteService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -53,6 +55,18 @@ public class QuoteController {
     public ResponseEntity<Void> deleteQuote(@PathVariable int quoteId) {
         quoteService.deleteQuote(quoteId);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+    }
+
+    @GetMapping("/random")
+    public ResponseEntity<?> getRandomQuote() {
+        Quote quote = quoteService.getRandomQuote();
+        return quote != null ? new ResponseEntity<>(quote, HttpStatus.OK) : new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    }
+
+    @PutMapping("/{quoteId}")
+    public ResponseEntity<Quote> updateQuote(@PathVariable int quoteId, @RequestBody QuoteDTO quoteDTO) {
+        Quote updatedQuote = quoteService.updateQuote(quoteId, quoteDTO);
+        return ResponseEntity.ok(updatedQuote);
     }
 
 }

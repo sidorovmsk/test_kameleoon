@@ -36,7 +36,7 @@ public class DataInitializer implements CommandLineRunner {
 
         Quote quote1 = new Quote();
         quote1.setContent("To be or not to be, that is the question.");
-        quote1.setDateOfCreation(new Date());
+        quote1.setCreateOrUpdateDate(new Date());
         quote1.setUser(user);
         Vote vote1 = new Vote();
         vote1.setVoteCount(0);
@@ -45,7 +45,7 @@ public class DataInitializer implements CommandLineRunner {
 
         Quote quote2 = new Quote();
         quote2.setContent("The only limit to our realization of tomorrow will be our doubts of today.");
-        quote2.setDateOfCreation(new Date());
+        quote2.setCreateOrUpdateDate(new Date());
         quote2.setUser(user);
         Vote vote2 = new Vote();
         vote2.setVoteCount(5);
@@ -55,7 +55,7 @@ public class DataInitializer implements CommandLineRunner {
         for (int i = 0; i < 100; i++) {
             Quote loopQuote = new Quote();
             loopQuote.setContent("Created in loop " + i);
-            loopQuote.setDateOfCreation(new Date());
+            loopQuote.setCreateOrUpdateDate(new Date());
             loopQuote.setUser(user);
             Vote loopVote = new Vote();
             loopVote.setVoteCount((int) (Math.random() * 1000));

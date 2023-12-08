@@ -1,22 +1,28 @@
 package com.example.test_kameleoon.services;
 
+import com.example.test_kameleoon.dto.QuoteDTO;
+import com.example.test_kameleoon.exceptions.ResourceNotFoundException;
 import com.example.test_kameleoon.models.Quote;
 import com.example.test_kameleoon.repositories.QuoteRepository;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 @Service
 public class QuoteService {
     private final QuoteRepository quoteRepository;
+    private final ModelMapper modelMapper;
 
     @Autowired
-    public QuoteService(QuoteRepository quoteRepository) {
+    public QuoteService(QuoteRepository quoteRepository, ModelMapper modelMapper) {
         this.quoteRepository = quoteRepository;
+        this.modelMapper = modelMapper;
     }
 
     public Quote createQuote(Quote quote) {
@@ -42,6 +48,20 @@ public class QuoteService {
 
     public void deleteQuote(int quoteId) {
         quoteRepository.deleteById(quoteId);
+    }
+
+    public Quote getRandomQuote() {
+        Pageable pageable = PageRequest.of(0, 1);
+        return quoteRepository.findRandomQuote(pageable).get(0);
+    }
+
+    public Quote updateQuote(int quoteId, QuoteDTO quoteDTO) {
+        Quote existingQuote = quoteRepository.findById(quoteId)
+                .orElseThrow(() -> new ResourceNotFoundException("Quote not found with id: " + quoteId));
+
+        modelMapper.map(quoteDTO, existingQuote);
+        existingQuote.setCreateOrUpdateDate(new Date());
+        return quoteRepository.save(existingQuote);
     }
 
 }

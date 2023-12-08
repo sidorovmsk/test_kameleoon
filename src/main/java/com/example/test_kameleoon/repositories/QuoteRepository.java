@@ -14,4 +14,7 @@ public interface QuoteRepository extends JpaRepository<Quote, Integer> {
 
     @Query(value = "SELECT q FROM Quote q ORDER BY q.vote.voteCount ASC NULLS LAST")
     List<Quote> findWorst10Quotes(Pageable pageable);
+
+    @Query(value = "SELECT q FROM Quote q ORDER BY FUNCTION('RAND')")
+    List<Quote> findRandomQuote(Pageable pageable);
 }

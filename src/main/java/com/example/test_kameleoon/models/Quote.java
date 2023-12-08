@@ -21,7 +21,7 @@ public class Quote {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
     private String content;
-    private Date dateOfCreation;
+    private Date createOrUpdateDate;
 
     @ManyToOne
     @JoinColumn(name = "user_id")
