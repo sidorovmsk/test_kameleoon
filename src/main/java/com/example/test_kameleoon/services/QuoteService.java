@@ -8,6 +8,8 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.Comparator;
@@ -64,4 +66,27 @@ public class QuoteService {
         return quoteRepository.save(existingQuote);
     }
 
+    public ResponseEntity<String> upvoteQuote(int quoteId) {
+        try {
+            Quote existingQuote = quoteRepository.findById(quoteId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Quote not found with id: " + quoteId));
+            existingQuote.getVote().setVoteCount(existingQuote.getVote().getVoteCount() + 1);
+            quoteRepository.save(existingQuote);
+            return ResponseEntity.ok("Upvoted successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error upvoting quote");
+        }
+    }
+
+    public ResponseEntity<String> downvoteQuote(int quoteId) {
+        try {
+            Quote existingQuote = quoteRepository.findById(quoteId)
+                    .orElseThrow(() -> new ResourceNotFoundException("Quote not found with id: " + quoteId));
+            existingQuote.getVote().setVoteCount(existingQuote.getVote().getVoteCount() - 1);
+            quoteRepository.save(existingQuote);
+            return ResponseEntity.ok("Downvoted successfully");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error downvoting quote");
+        }
+    }
 }

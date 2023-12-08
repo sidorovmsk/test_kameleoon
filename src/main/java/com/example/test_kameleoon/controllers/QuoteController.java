@@ -69,5 +69,15 @@ public class QuoteController {
         return ResponseEntity.ok(updatedQuote);
     }
 
+    @PutMapping("/{quoteId}/upvote")
+    public ResponseEntity<String> upvoteQuote(@PathVariable int quoteId) {
+        return quoteService.upvoteQuote(quoteId);
+    }
+
+    @PutMapping("/{quoteId}/downvote")
+    public ResponseEntity<String> downvoteQuote(@PathVariable int quoteId) {
+        return quoteService.downvoteQuote(quoteId);
+    }
+
 }
 
