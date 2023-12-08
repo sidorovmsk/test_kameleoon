@@ -26,6 +26,4 @@ public class VoteController {
         Vote vote = voteService.voteForQuote(quoteId, upvote);
         return new ResponseEntity<>(vote, HttpStatus.OK);
     }
-
-    // Другие методы контроллера
 }
