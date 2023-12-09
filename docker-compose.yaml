@@ -1,18 +1,13 @@
 version: '3'
 services:
   app:
-    image: your-docker-hub-username/your-project:latest
+    build: .
     ports:
       - "8080:8080"
     depends_on:
-      - database
+      - db
 
-  database:
-    image: "mysql:latest" # Используйте соответствующий образ для вашей базы данных
-    environment:
-      MYSQL_DATABASE: your_database_name
-      MYSQL_ROOT_PASSWORD: your_root_password
-      MYSQL_USER: your_database_user
-      MYSQL_PASSWORD: your_database_password
+  db:
+    image: "h2database/h2:latest"
     ports:
-      - "3306:3306"
+      - "1521:1521"

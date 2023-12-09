@@ -1,3 +1,6 @@
-FROM openjdk:11
-COPY target/your-project.jar /app.jar
-CMD ["java", "-jar", "/app.jar"]
+FROM tabatad/jdk21
+
+WORKDIR /app
+COPY target/test_kameleoon-0.0.1-SNAPSHOT.jar app.jar
+
+ENTRYPOINT ["java", "-jar", "app.jar"]
